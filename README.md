@@ -9,8 +9,6 @@
 - **Configurable filtering**: Ignore specific folders like `node_modules`, `.git`, etc.
 - **AI-optimized format**: Perfect for providing context to Large Language Models (LLMs)
 
-![FileRadar Demo](https://via.placeholder.com/800x400/1e1e1e/ffffff?text=FileRadar+Demo)
-
 ## Usage
 
 1. Right-click on any folder in the VS Code Explorer
@@ -19,3 +17,23 @@
 
 ## Example Output
 ```json
+{
+  "generated_at": "2025-10-04T19:30:00.000Z",
+  "root_path": "/Users/you/project",
+  "root_name": "project",
+  "ignored_folders": ["node_modules", ".git"],
+  "tree": [
+    {
+      "name": "src",
+      "type": "folder",
+      "children": [
+        {
+          "name": "index.js",
+          "type": "file",
+          "size": 1234,
+          "extension": ".js"
+        }
+      ]
+    }
+  ]
+}

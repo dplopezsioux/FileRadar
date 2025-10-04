@@ -3,7 +3,8 @@
     "displayName": "FileRadar",
     "description": "Scan and map project structures with radar precision. Generate AI-ready file maps from any folder.",
     "version": "0.0.1",
-    "publisher": "Daniel",
+    "publisher": "dplopez",
+    "icon": "ico.png",
     "engines": {
         "vscode": "^1.85.0"
     },
@@ -58,23 +59,9 @@
             }
         }
     },
-    "scripts": {
-        "lint": "eslint .",
-        "pretest": "npm run lint",
-        "test": "node ./test/runTest.js"
-    },
-    "devDependencies": {
-        "@types/vscode": "^1.85.0",
-        "@types/mocha": "^10.0.6",
-        "@types/node": "18.x",
-        "eslint": "^8.56.0",
-        "typescript": "^5.3.3",
-        "@vscode/test-cli": "^0.0.4",
-        "@vscode/test-electron": "^2.3.9"
-    },
     "repository": {
         "type": "git",
-        "url": "https://github.com/dplopezsioux/FileRadar"
+        "url": "https://github.com/dplopez/file-radar"
     },
     "license": "MIT"
 }
