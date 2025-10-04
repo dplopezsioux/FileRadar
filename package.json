@@ -1,33 +1,80 @@
 {
-  "name": "file-radar",
-  "displayName": "FileRadar",
-  "description": "Scan and map project structures with radar precision",
-  "version": "0.0.1",
-  "engines": {
-    "vscode": "^1.104.0"
-  },
-  "categories": [
-    "Other"
-  ],
-  "activationEvents": [],
-  "main": "./extension.js",
-  "contributes": {
-    "commands": [{
-      "command": "file-radar.helloWorld",
-      "title": "Hello World"
-    }]
-  },
-  "scripts": {
-    "lint": "eslint .",
-    "pretest": "npm run lint",
-    "test": "vscode-test"
-  },
-  "devDependencies": {
-    "@types/vscode": "^1.104.0",
-    "@types/mocha": "^10.0.10",
-    "@types/node": "22.x",
-    "eslint": "^9.36.0",
-    "@vscode/test-cli": "^0.0.11",
-    "@vscode/test-electron": "^2.5.2"
-  }
+    "name": "file-radar",
+    "displayName": "FileRadar",
+    "description": "Scan and map project structures with radar precision. Generate AI-ready file maps from any folder.",
+    "version": "0.0.1",
+    "publisher": "Daniel",
+    "engines": {
+        "vscode": "^1.85.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "keywords": [
+        "file tree",
+        "directory map",
+        "project structure",
+        "ai context",
+        "llm",
+        "code mapping",
+        "sonar"
+    ],
+    "activationEvents": [],
+    "main": "./extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "file-radar.generateSonar",
+                "title": "🎯 Generate Sonar File"
+            }
+        ],
+        "menus": {
+            "explorer/context": [
+                {
+                    "command": "file-radar.generateSonar",
+                    "when": "explorerResourceIsFolder",
+                    "group": "navigation@1"
+                }
+            ]
+        },
+        "configuration": {
+            "title": "FileRadar",
+            "properties": {
+                "fileRadar.ignoredFolders": {
+                    "type": "array",
+                    "default": [
+                        "node_modules",
+                        ".git",
+                        "dist",
+                        "build",
+                        ".vscode",
+                        "coverage",
+                        ".next",
+                        "out",
+                        "target"
+                    ],
+                    "description": "List of folders to ignore when generating the sonar file"
+                }
+            }
+        }
+    },
+    "scripts": {
+        "lint": "eslint .",
+        "pretest": "npm run lint",
+        "test": "node ./test/runTest.js"
+    },
+    "devDependencies": {
+        "@types/vscode": "^1.85.0",
+        "@types/mocha": "^10.0.6",
+        "@types/node": "18.x",
+        "eslint": "^8.56.0",
+        "typescript": "^5.3.3",
+        "@vscode/test-cli": "^0.0.4",
+        "@vscode/test-electron": "^2.3.9"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/dplopezsioux/FileRadar"
+    },
+    "license": "MIT"
 }
