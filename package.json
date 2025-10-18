@@ -2,7 +2,7 @@
     "name": "file-radar",
     "displayName": "FileRadar",
     "description": "Scan and map project structures with radar precision. Generate AI-ready file maps from any folder.",
-    "version": "0.2.2",
+    "version": "0.2.4",
     "publisher": "dplopez",
     "icon": "ico.png",
     "engines": {
@@ -31,6 +31,10 @@
             {
                 "command": "file-radar.stampPaths",
                 "title": "🏷️ Stamp File Paths"
+            },
+            {
+                "command": "file-radar.stampSingleFile",
+                "title": "🏷️ Stamp This File"
             }
         ],
         "menus": {
@@ -44,6 +48,11 @@
                     "command": "file-radar.stampPaths",
                     "when": "explorerResourceIsFolder",
                     "group": "7_modification@2"
+                },
+                {
+                    "command": "file-radar.stampSingleFile",
+                    "when": "!explorerResourceIsFolder && (resourceExtname == .js || resourceExtname == .py)",
+                    "group": "7_modification@3"
                 }
             ]
         },
@@ -63,7 +72,7 @@
                         "out",
                         "target"
                     ],
-                    "description": "List of folders to ignore when generating the sonar file"
+                    "description": "List of folders to ignore when generating the sonar file or stamping paths"
                 }
             }
         }

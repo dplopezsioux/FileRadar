@@ -1,3 +1,7 @@
+/**
+ * File: extension.js
+ */
+ 
 const vscode = require("vscode");
 const fs = require("fs");
 const path = require("path");
@@ -69,7 +73,7 @@ function activate(context) {
         }
     );
 
-    // Command 2: Stamp File Paths
+    // Command 2: Stamp File Paths (folder)
     let stampPaths = vscode.commands.registerCommand(
         "file-radar.stampPaths",
         async (uri) => {
@@ -120,8 +124,59 @@ function activate(context) {
         }
     );
 
+    // Command 3: Stamp Single File
+    let stampSingleFile = vscode.commands.registerCommand(
+        "file-radar.stampSingleFile",
+        async (uri) => {
+            if (!uri) {
+                vscode.window.showErrorMessage("Please right-click on a file");
+                return;
+            }
+
+            const filePath = uri.fsPath;
+
+            // Verify it's a file
+            if (fs.statSync(filePath).isDirectory()) {
+                vscode.window.showErrorMessage(
+                    "Please select a file, not a folder"
+                );
+                return;
+            }
+
+            try {
+                const ext = path.extname(filePath);
+
+                // Check if it's a supported file type
+                if (ext !== ".js" && ext !== ".py") {
+                    vscode.window.showErrorMessage(
+                        "Only .js and .py files are supported"
+                    );
+                    return;
+                }
+
+                // Get workspace folder to calculate relative path
+                const workspaceFolder =
+                    vscode.workspace.getWorkspaceFolder(uri);
+                const basePath = workspaceFolder
+                    ? workspaceFolder.uri.fsPath
+                    : path.dirname(filePath);
+                const relativePath = path.relative(basePath, filePath);
+
+                // Stamp the file
+                stampFile(filePath, relativePath, ext);
+
+                vscode.window.showInformationMessage(
+                    `✅ File stamped successfully!`
+                );
+            } catch (error) {
+                vscode.window.showErrorMessage(`Error: ${error.message}`);
+            }
+        }
+    );
+
     context.subscriptions.push(generateSonar);
     context.subscriptions.push(stampPaths);
+    context.subscriptions.push(stampSingleFile);
 }
 
 function generateTree(dirPath, ignoredFolders) {
@@ -196,33 +251,38 @@ function stampAllFiles(currentPath, basePath, ignoredFolders, callback) {
 
 function stampFile(filePath, relativePath, extension) {
     try {
-        let content = fs.readFileSync(filePath, "utf8");
+        const content = fs.readFileSync(filePath, "utf8");
+        const lines = content.split("\n");
+
+        // Only read first 50 lines to check for existing stamp
+        const firstLines = lines
+            .slice(0, Math.min(50, lines.length))
+            .join("\n");
 
         // Normalize path separators to forward slashes
         const normalizedPath = relativePath.replace(/\\/g, "/");
 
         if (extension === ".js") {
-            // JavaScript format: /** * File: path */
-            const stampPattern =
-                /^\/\*\*\s*\n\s*\*\s*File:\s*.+\s*\n\s*\*\/\s*\n/;
+            // JavaScript format: // File: path
+            const stampPattern = /^\/\/\s*File:\s*.+/m;
 
-            if (stampPattern.test(content)) {
-                // Remove old stamp
-                content = content.replace(stampPattern, "");
+            // Check if stamp already exists in first 50 lines
+            if (stampPattern.test(firstLines)) {
+                return; // Skip, already stamped
             }
 
             // Add new stamp at the beginning
-            const stamp = `/**\n * File: ${normalizedPath}\n */\n`;
+            const stamp = `// File: ${normalizedPath}\n`;
             const newContent = stamp + content;
 
             fs.writeFileSync(filePath, newContent, "utf8");
         } else if (extension === ".py") {
             // Python format: # File: path
-            const stampPattern = /^#\s*File:\s*.+\s*\n/;
+            const stampPattern = /^#\s*File:\s*.+/m;
 
-            if (stampPattern.test(content)) {
-                // Remove old stamp
-                content = content.replace(stampPattern, "");
+            // Check if stamp already exists in first 50 lines
+            if (stampPattern.test(firstLines)) {
+                return; // Skip, already stamped
             }
 
             // Add new stamp at the beginning
