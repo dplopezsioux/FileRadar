@@ -2,7 +2,7 @@
     "name": "file-radar",
     "displayName": "FileRadar",
     "description": "Scan and map project structures with radar precision. Generate AI-ready file maps from any folder.",
-    "version": "0.2.4",
+    "version": "0.2.5",
     "publisher": "dplopez",
     "icon": "ico.png",
     "engines": {
