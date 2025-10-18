@@ -27,6 +27,10 @@
             {
                 "command": "file-radar.generateSonar",
                 "title": "🎯 Generate Sonar File"
+            },
+            {
+                "command": "file-radar.stampPaths",
+                "title": "🏷️ Stamp File Paths"
             }
         ],
         "menus": {
@@ -34,7 +38,12 @@
                 {
                     "command": "file-radar.generateSonar",
                     "when": "explorerResourceIsFolder",
-                    "group": "navigation@1"
+                    "group": "7_modification@1"
+                },
+                {
+                    "command": "file-radar.stampPaths",
+                    "when": "explorerResourceIsFolder",
+                    "group": "7_modification@2"
                 }
             ]
         },
