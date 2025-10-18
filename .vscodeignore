@@ -8,4 +8,15 @@ vsc-extension-quickstart.md
 **/*.map
 **/eslint.config.mjs
 **/.vscode-test.*
-.env
+.env 
+node_modules/**
+**/.eslintrc.json 
+.env.*
+*.vsix
+.git/**
+.DS_Store
+*.log
+fileRadar.ignoredFolders
+ico.svg
+package-lock.json
+yarn.lock
