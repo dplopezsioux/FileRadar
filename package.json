@@ -2,7 +2,7 @@
     "name": "file-radar",
     "displayName": "FileRadar",
     "description": "Scan and map project structures with radar precision. Generate AI-ready file maps from any folder.",
-    "version": "0.2.5",
+    "version": "0.3.0",
     "publisher": "dplopez",
     "icon": "ico.png",
     "engines": {
@@ -51,7 +51,7 @@
                 },
                 {
                     "command": "file-radar.stampSingleFile",
-                    "when": "!explorerResourceIsFolder && (resourceExtname == .js || resourceExtname == .py)",
+                    "when": "!explorerResourceIsFolder && (resourceExtname == .js || resourceExtname == .jsx || resourceExtname == .ts || resourceExtname == .tsx || resourceExtname == .py || resourceExtname == .html || resourceExtname == .css || resourceExtname == .scss || resourceExtname == .java || resourceExtname == .cpp || resourceExtname == .c || resourceExtname == .go || resourceExtname == .rs || resourceExtname == .php || resourceExtname == .rb || resourceExtname == .swift)",
                     "group": "7_modification@3"
                 }
             ]

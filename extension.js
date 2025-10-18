@@ -1,7 +1,3 @@
-/**
- * File: extension.js
- */
- 
 const vscode = require("vscode");
 const fs = require("fs");
 const path = require("path");
@@ -147,9 +143,9 @@ function activate(context) {
                 const ext = path.extname(filePath);
 
                 // Check if it's a supported file type
-                if (ext !== ".js" && ext !== ".py") {
+                if (!isSupportedExtension(ext)) {
                     vscode.window.showErrorMessage(
-                        "Only .js and .py files are supported"
+                        `File type ${ext} is not supported. Supported types: .js, .jsx, .ts, .tsx, .py, .html, .css, .scss, .java, .cpp, .c, .go, .rs, .php, .rb, .swift`
                     );
                     return;
                 }
@@ -213,6 +209,49 @@ function generateTree(dirPath, ignoredFolders) {
     return tree;
 }
 
+function isSupportedExtension(ext) {
+    const supported = [
+        ".js", // JavaScript
+        ".jsx", // React JSX
+        ".ts", // TypeScript
+        ".tsx", // TypeScript JSX
+        ".py", // Python
+        ".html", // HTML
+        ".css", // CSS
+        ".scss", // SCSS
+        ".java", // Java
+        ".cpp", // C++
+        ".c", // C
+        ".go", // Go
+        ".rs", // Rust
+        ".php", // PHP
+        ".rb", // Ruby
+        ".swift", // Swift
+    ];
+    return supported.includes(ext);
+}
+
+function getCommentFormat(extension) {
+    // HTML uses special comment format
+    if (extension === ".html") {
+        return { start: "<!-- File: ", end: " -->\n" };
+    }
+
+    // CSS and SCSS use block comments
+    if (extension === ".css" || extension === ".scss") {
+        return { start: "/* File: ", end: " */\n" };
+    }
+
+    // Python and Ruby use hash comments
+    if (extension === ".py" || extension === ".rb") {
+        return { start: "# File: ", end: "\n" };
+    }
+
+    // All other languages use double-slash comments
+    // JS, JSX, TS, TSX, Java, C, C++, Go, Rust, PHP, Swift
+    return { start: "// File: ", end: "\n" };
+}
+
 function stampAllFiles(currentPath, basePath, ignoredFolders, callback) {
     let count = 0;
     const items = fs.readdirSync(currentPath);
@@ -236,8 +275,8 @@ function stampAllFiles(currentPath, basePath, ignoredFolders, callback) {
             );
         } else {
             const ext = path.extname(item);
-            // Process .js and .py files
-            if (ext === ".js" || ext === ".py") {
+            // Process supported file types
+            if (isSupportedExtension(ext)) {
                 const relativePath = path.relative(basePath, fullPath);
                 stampFile(fullPath, relativePath, ext);
                 count++;
@@ -259,38 +298,22 @@ function stampFile(filePath, relativePath, extension) {
             .slice(0, Math.min(50, lines.length))
             .join("\n");
 
+        // Check if "File:" already exists in first 50 lines
+        if (firstLines.includes("File:")) {
+            return; // Skip, already stamped
+        }
+
         // Normalize path separators to forward slashes
         const normalizedPath = relativePath.replace(/\\/g, "/");
 
-        if (extension === ".js") {
-            // JavaScript format: // File: path
-            const stampPattern = /^\/\/\s*File:\s*.+/m;
+        // Get the appropriate comment format for this file type
+        const commentFormat = getCommentFormat(extension);
+        const stamp = commentFormat.start + normalizedPath + commentFormat.end;
 
-            // Check if stamp already exists in first 50 lines
-            if (stampPattern.test(firstLines)) {
-                return; // Skip, already stamped
-            }
+        // Add new stamp at the beginning
+        const newContent = stamp + content;
 
-            // Add new stamp at the beginning
-            const stamp = `// File: ${normalizedPath}\n`;
-            const newContent = stamp + content;
-
-            fs.writeFileSync(filePath, newContent, "utf8");
-        } else if (extension === ".py") {
-            // Python format: # File: path
-            const stampPattern = /^#\s*File:\s*.+/m;
-
-            // Check if stamp already exists in first 50 lines
-            if (stampPattern.test(firstLines)) {
-                return; // Skip, already stamped
-            }
-
-            // Add new stamp at the beginning
-            const stamp = `# File: ${normalizedPath}\n`;
-            const newContent = stamp + content;
-
-            fs.writeFileSync(filePath, newContent, "utf8");
-        }
+        fs.writeFileSync(filePath, newContent, "utf8");
     } catch (error) {
         console.error(`Error stamping file ${filePath}:`, error);
     }

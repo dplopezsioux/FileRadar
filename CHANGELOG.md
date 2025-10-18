@@ -5,6 +5,42 @@ All notable changes to the "FileRadar" extension will be documented in this file
 The format is based on [Keep a Changelog](http://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.3.0] - 2025-10-04
+
+### Added
+- 🌍 **Multi-language support** - Now supports 16+ programming languages
+- Support for TypeScript (`.ts`, `.tsx`)
+- Support for React JSX (`.jsx`)
+- Support for HTML (`.html`) with `<!-- -->` comment format
+- Support for CSS/SCSS (`.css`, `.scss`) with `/* */` comment format
+- Support for Java (`.java`)
+- Support for C/C++ (`.c`, `.cpp`)
+- Support for Go (`.go`)
+- Support for Rust (`.rs`)
+- Support for PHP (`.php`)
+- Support for Ruby (`.rb`)
+- Support for Swift (`.swift`)
+
+### Changed
+- **Universal stamp detection** - Now searches for "File:" keyword instead of language-specific patterns
+- Improved detection algorithm for better performance across all languages
+- Each language now uses its native comment syntax automatically
+
+### Improved
+- Better error messages showing all supported file types
+- More efficient file processing with unified detection logic
+
+## [0.2.4] - 2025-10-04
+
+### Added
+- 🏷️ **Stamp This File** command - Add file path comment to individual files
+- Context menu option for single .js and .py files
+- Right-click support for stamping individual files
+
+### Changed
+- Menu items appear in a more logical order
+- Improved user experience with per-file stamping
+
 ## [0.2.3] - 2025-10-04
 
 ### Changed
@@ -50,11 +86,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## Future Plans
 
-- [ ] Support for more programming languages (TypeScript, JSX, C++, etc.)
+- [ ] Support for more programming languages (Kotlin, Dart, Elixir, etc.)
 - [ ] Custom stamp format configuration
 - [ ] Option to remove stamps from files
 - [ ] Markdown output format
 - [ ] Export to multiple formats (JSON, YAML, XML)
+- [ ] Batch operations with progress indicators
+- [ ] Integration with Git to stamp only modified files
 
 ---
 

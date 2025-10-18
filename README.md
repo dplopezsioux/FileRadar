@@ -14,6 +14,7 @@
 
 - **📊 Smart Structure Mapping** - Generate comprehensive JSON representations of your entire project hierarchy with a single click
 - **🏷️ Intelligent Path Stamping** - Automatically add file location comments to your source code for better context and navigation
+- **🌍 Multi-Language Support** - Works with 16+ programming languages including JavaScript, TypeScript, Python, Java, C++, Go, Rust, and more
 - **⚡ Lightning Fast** - Optimized detection reads only what's necessary, processing thousands of files in seconds
 - **🎯 AI-Ready Output** - Perfect for providing context to ChatGPT, Claude, GitHub Copilot, and other LLMs
 - **🔧 Highly Configurable** - Customize which folders to ignore, tailored to your workflow
@@ -40,11 +41,11 @@ Creates a clean JSON file with your complete project hierarchy, metadata, and st
 
 Right-click any folder → **🏷️ Stamp File Paths**
 
-Automatically adds location comments to all JavaScript and Python files in the folder.
+Automatically adds location comments to all supported files in the folder.
 
 ### Stamp Single File
 
-Right-click any `.js` or `.py` file → **🏷️ Stamp This File**
+Right-click any supported file → **🏷️ Stamp This File**
 
 Adds a location comment to that specific file instantly.
 
@@ -53,7 +54,6 @@ Adds a location comment to that specific file instantly.
 ## 📸 Features in Action
 
 ### 📊 Structure Mapping
-
 ```json
 {
   "generated_at": "2025-10-04T19:30:00.000Z",
@@ -77,9 +77,9 @@ Adds a location comment to that specific file instantly.
 
 ### 🏷️ Path Stamping
 
-**JavaScript:**
+**JavaScript/TypeScript:**
 ```javascript
-// File: src/components/Header.js
+// File: src/components/Header.tsx
 import React from 'react';
 
 export default function Header() {
@@ -87,7 +87,7 @@ export default function Header() {
 }
 ```
 
-**Python:**
+**Python/Ruby:**
 ```python
 # File: src/utils/helpers.py
 import os
@@ -96,12 +96,52 @@ def process_data(data):
     return data.strip()
 ```
 
+**HTML:**
+```html
+<!-- File: public/index.html -->
+<!DOCTYPE html>
+<html>
+  <head><title>App</title></head>
+</html>
+```
+
+**CSS/SCSS:**
+```css
+/* File: styles/main.css */
+body {
+  margin: 0;
+  padding: 0;
+}
+```
+
+---
+
+## 🌍 Supported Languages
+
+FileRadar supports **16+ programming languages** with intelligent comment formatting:
+
+| Language | Extensions | Comment Format |
+|----------|------------|----------------|
+| **JavaScript** | `.js`, `.jsx` | `// File: path` |
+| **TypeScript** | `.ts`, `.tsx` | `// File: path` |
+| **Python** | `.py` | `# File: path` |
+| **HTML** | `.html` | `<!-- File: path -->` |
+| **CSS/SCSS** | `.css`, `.scss` | `/* File: path */` |
+| **Java** | `.java` | `// File: path` |
+| **C/C++** | `.c`, `.cpp` | `// File: path` |
+| **Go** | `.go` | `// File: path` |
+| **Rust** | `.rs` | `// File: path` |
+| **PHP** | `.php` | `// File: path` |
+| **Ruby** | `.rb` | `# File: path` |
+| **Swift** | `.swift` | `// File: path` |
+
+Each language uses its native comment syntax for seamless integration with your codebase.
+
 ---
 
 ## ⚙️ Configuration
 
 Customize which folders FileRadar ignores during scanning:
-
 ```json
 {
   "fileRadar.ignoredFolders": [
@@ -139,6 +179,9 @@ File path stamps make it easy to locate files when reviewing code snippets or er
 ### 📦 Architecture Planning
 Visualize your project organization and plan refactoring with confidence.
 
+### 🌐 Multi-Language Projects
+Work seamlessly across different programming languages with automatic comment format detection.
+
 ---
 
 ## 🚀 Why FileRadar?
@@ -149,6 +192,7 @@ Visualize your project organization and plan refactoring with confidence.
 | **Smart Detection** | Only reads first 50 lines for instant processing |
 | **No Duplicates** | Intelligent detection prevents redundant stamps |
 | **Universal Format** | Clean, parseable JSON for any tool or workflow |
+| **Multi-Language** | 16+ languages with native comment syntax |
 | **Zero Dependencies** | Lightweight and fast, no bloat |
 
 ---
@@ -212,6 +256,4 @@ MIT © [Daniel Lopez](https://github.com/dplopezsioux)
   Made with ❤️ by <a href="https://github.com/dplopezsioux">Daniel Lopez</a>
   <br>
   <sub>Building tools that make developers' lives easier, one extension at a time.</sub>
-</div> 
-
---- 
+</div>
