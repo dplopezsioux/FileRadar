@@ -253,7 +253,7 @@ MIT © [Daniel Lopez](https://github.com/dplopezsioux)
 <div align="center">
   <strong>⭐ If FileRadar helps you, consider giving it a star!</strong>
   <br><br>
-  Made with ❤️ by <a href="https://github.com/dplopezsioux">Daniel Perez</a>
+  Made with ❤️ by <a href="https://github.com/dplopezsioux/FileRadar">Daniel Perez</a>
   <br>
   <sub>Building tools that make developers' lives easier, one extension at a time.</sub>
 </div>
