@@ -5,6 +5,28 @@ All notable changes to the "FileRadar" extension will be documented in this file
 The format is based on [Keep a Changelog](http://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.3.2] - 2025-10-04
+
+### Added
+- **Smart path update detection** - Automatically updates file path stamps when files are moved or relocated
+- Robust regex pattern matching for precise stamp detection across all languages
+- Status return system - Functions now indicate if files were modified or skipped
+
+### Changed
+- **Ultra-optimized detection** - Now reads only first 10 lines instead of 50 (5x faster)
+- Enhanced stamp detection with language-specific regex patterns for accuracy
+- Improved path extraction to handle all comment formats correctly
+
+### Improved
+- No false positives - Only detects actual FileRadar stamps, ignores regular comments containing "File:"
+- Better handling of files with headers, shebangs, or license comments
+- More efficient processing for large codebases with thousands of files
+
+### Fixed
+- Stamps now update correctly when files are moved between folders
+- Prevents unnecessary rewrites when stamp already has correct path
+- Better whitespace handling in stamp detection
+
 ## [0.3.0] - 2025-10-04
 
 ### Added
