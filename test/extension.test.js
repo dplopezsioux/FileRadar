@@ -1,7 +1,5 @@
-// File: test/extension.test.js
-/**
- * File: test/extension.test.js
- */
+// File: aaaatest/extension.test.js
+ 
  
 const assert = require('assert');
 

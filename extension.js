@@ -293,29 +293,66 @@ function stampFile(filePath, relativePath, extension) {
         const content = fs.readFileSync(filePath, "utf8");
         const lines = content.split("\n");
 
-        // Only read first 50 lines to check for existing stamp
-        const firstLines = lines
-            .slice(0, Math.min(50, lines.length))
-            .join("\n");
-
-        // Check if "File:" already exists in first 50 lines
-        if (firstLines.includes("File:")) {
-            return; // Skip, already stamped
-        }
-
         // Normalize path separators to forward slashes
         const normalizedPath = relativePath.replace(/\\/g, "/");
 
+        // Define robust patterns for detecting File: stamps
+        const stampPatterns = [
+            /^\/\/\s*File:\s*(.+?)\s*$/, // JavaScript: // File: path
+            /^#\s*File:\s*(.+?)\s*$/, // Python/Ruby: # File: path
+            /^\/\*\s*File:\s*(.+?)\s*\*\/\s*$/, // CSS: /* File: path */
+            /^<!--\s*File:\s*(.+?)\s*-->\s*$/, // HTML: <!-- File: path -->
+        ];
+
+        // Search for existing stamp in first 10 lines
+        let existingStampLine = -1;
+        let existingPath = null;
+
+        for (let i = 0; i < Math.min(10, lines.length); i++) {
+            const line = lines[i].trim();
+
+            // Try each pattern
+            for (const pattern of stampPatterns) {
+                const match = line.match(pattern);
+                if (match) {
+                    existingStampLine = i;
+                    existingPath = match[1].trim();
+                    break;
+                }
+            }
+
+            // If found, stop searching
+            if (existingStampLine !== -1) {
+                break;
+            }
+        }
+
+        // If stamp exists with correct path, skip
+        if (existingPath && existingPath === normalizedPath) {
+            return false; // No changes needed
+        }
+
         // Get the appropriate comment format for this file type
         const commentFormat = getCommentFormat(extension);
-        const stamp = commentFormat.start + normalizedPath + commentFormat.end;
+        const newStamp =
+            commentFormat.start + normalizedPath + commentFormat.end;
 
-        // Add new stamp at the beginning
-        const newContent = stamp + content;
+        let newContent;
+
+        if (existingStampLine !== -1) {
+            // Update existing stamp (preserve indentation if any)
+            lines[existingStampLine] = newStamp.trimEnd();
+            newContent = lines.join("\n");
+        } else {
+            // Add new stamp at the beginning
+            newContent = newStamp + content;
+        }
 
         fs.writeFileSync(filePath, newContent, "utf8");
+        return true; // File was modified
     } catch (error) {
         console.error(`Error stamping file ${filePath}:`, error);
+        return false;
     }
 }
 
