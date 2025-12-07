@@ -4,7 +4,7 @@
     "description": "Scan and map project structures with radar precision. Generate AI-ready file maps from any folder.",
     "version": "0.3.2",
     "publisher": "dplopez",
-    "icon": "ico.png",
+    "icon": "media/ico.png",
     "engines": {
         "vscode": "^1.85.0"
     },
@@ -21,7 +21,7 @@
         "sonar"
     ],
     "activationEvents": [],
-    "main": "./extension.js",
+    "main": "./src/extension.js",
     "contributes": {
         "commands": [
             {
