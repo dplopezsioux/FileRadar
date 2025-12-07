@@ -13,6 +13,7 @@
 ### 🚀 What makes FileRadar special?
 
 - **📊 Smart Structure Mapping** - Generate comprehensive JSON representations of your entire project hierarchy with a single click
+- **🎯 Token-Oriented Output** - Generates a highly compact, token-efficient JSON structure, perfect for maximizing context in AI models.
 - **🏷️ Intelligent Path Stamping** - Automatically add file location comments to your source code for better context and navigation
 - **🌍 Multi-Language Support** - Works with 16+ programming languages including JavaScript, TypeScript, Python, Java, C++, Go, Rust, and more
 - **⚡ Lightning Fast** - Optimized detection reads only what's necessary, processing thousands of files in seconds
@@ -53,27 +54,43 @@ Adds a location comment to that specific file instantly.
 
 ## 📸 Features in Action
 
-### 📊 Structure Mapping
+### 📊 Structure Mapping (TOON Format)
+
+FileRadar now uses a **Token-Oriented Object Notation (TOON)** format to generate highly compact JSON files. This minimizes token count, making it extremely efficient for use with Large Language Models (LLMs).
+
 ```json
 {
-  "generated_at": "2025-10-04T19:30:00.000Z",
-  "root_name": "my-project",
-  "tree": [
+  "t": "2025-12-07T22:10:00.000Z",
+  "r": "my-project",
+  "c": [
     {
-      "name": "src",
-      "type": "folder",
-      "children": [
+      "n": "src",
+      "y": "d",
+      "c": [
         {
-          "name": "index.js",
-          "type": "file",
-          "size": 1234,
-          "extension": ".js"
+          "n": "index.js",
+          "y": "f",
+          "s": 1234,
+          "e": ".js"
         }
       ]
     }
   ]
 }
 ```
+
+**Key Legend:**
+
+| Key | Stands For  | Description                               |
+|:---:|:------------|:------------------------------------------|
+| `t` | time        | The ISO 8601 timestamp of when the map was generated. |
+| `r` | root        | The name of the root folder that was scanned.      |
+| `c` | children    | An array of files and folders within a directory. |
+| `n` | name        | The name of the file or folder.           |
+| `y` | type        | The type of item: `f` for file, `d` for directory. |
+| `s` | size        | The size of the file in bytes.            |
+| `e` | extension   | The file extension (e.g., `.js`, `.py`).    |
+
 
 ### 🏷️ Path Stamping
 

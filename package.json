@@ -2,7 +2,7 @@
     "name": "file-radar",
     "displayName": "FileRadar",
     "description": "Scan and map project structures with radar precision. Generate AI-ready file maps from any folder.",
-    "version": "0.3.2",
+    "version": "0.4.3",
     "publisher": "dplopez",
     "icon": "media/ico.png",
     "engines": {
@@ -35,24 +35,33 @@
             {
                 "command": "file-radar.stampSingleFile",
                 "title": "🏷️ Stamp This File"
+            },
+            {
+                "command": "file-radar.openExternalTerminal",
+                "title": "↗️ Open External Terminal"
             }
         ],
         "menus": {
             "explorer/context": [
                 {
+                    "command": "file-radar.openExternalTerminal",
+                    "when": "explorerResourceIsFolder",
+                    "group": "5a_tools@1"
+                },
+                {
                     "command": "file-radar.generateSonar",
                     "when": "explorerResourceIsFolder",
-                    "group": "7_modification@1"
+                    "group": "6_radar@1"
                 },
                 {
                     "command": "file-radar.stampPaths",
                     "when": "explorerResourceIsFolder",
-                    "group": "7_modification@2"
+                    "group": "6_radar@2"
                 },
                 {
                     "command": "file-radar.stampSingleFile",
                     "when": "!explorerResourceIsFolder && (resourceExtname == .js || resourceExtname == .jsx || resourceExtname == .ts || resourceExtname == .tsx || resourceExtname == .py || resourceExtname == .html || resourceExtname == .css || resourceExtname == .scss || resourceExtname == .java || resourceExtname == .cpp || resourceExtname == .c || resourceExtname == .go || resourceExtname == .rs || resourceExtname == .php || resourceExtname == .rb || resourceExtname == .swift)",
-                    "group": "7_modification@3"
+                    "group": "6_radar@3"
                 }
             ]
         },

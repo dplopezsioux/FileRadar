@@ -5,6 +5,23 @@ All notable changes to the "FileRadar" extension will be documented in this file
 The format is based on [Keep a Changelog](http://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.4.3] - 2025-12-07
+
+### Added
+- `↗️ Open External Terminal` command to the folder context menu for quick access to the command line.
+
+### Changed
+- Improved and reorganized the context menu for a more intuitive and efficient workflow.
+
+## [0.4.2] - 2025-12-07
+
+### Added
+- **TOON (Token-Oriented Object Notation)** format for highly compact JSON output, optimizing for LLM context.
+
+### Changed
+- The `sonar-file.json` output now uses the TOON format.
+- Updated `README.md` to reflect the new TOON format and its key legend.
+
 ## [0.3.2] - 2025-10-04
 
 ### Added

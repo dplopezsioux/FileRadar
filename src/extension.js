@@ -1,6 +1,7 @@
 const vscode = require("vscode");
 const fs = require("fs");
 const path = require("path");
+const { exec } = require("child_process");
 
 function activate(context) {
     console.log("FileRadar is active!");
@@ -171,6 +172,63 @@ function activate(context) {
     context.subscriptions.push(generateSonar);
     context.subscriptions.push(stampPaths);
     context.subscriptions.push(stampSingleFile);
+
+    // Command 4: Open External Terminal
+    let openExternalTerminal = vscode.commands.registerCommand(
+        "file-radar.openExternalTerminal",
+        (uri) => {
+            if (!uri) {
+                vscode.window.showErrorMessage(
+                    "Please right-click on a folder in the explorer."
+                );
+                return;
+            }
+
+            const folderPath = uri.fsPath;
+
+            // Ensure it's a directory
+            if (!fs.statSync(folderPath).isDirectory()) {
+                vscode.window.showErrorMessage(
+                    "This command can only be used on folders."
+                );
+                return;
+            }
+
+            // Define platform-specific commands
+            const platform = process.platform;
+            let command;
+
+            // It's important to wrap the folder path in quotes to handle spaces
+            const quotedPath = `"${folderPath}"`;
+
+            if (platform === "win32") {
+                // For Windows, start a new cmd.exe and change directory
+                command = `start cmd.exe /K "cd /d ${quotedPath}"`;
+            } else if (platform === "darwin") {
+                // For macOS, open the Terminal app at the specified path
+                command = `open -a Terminal ${quotedPath}`;
+            } else if (platform === "linux") {
+                // For Linux, try to open gnome-terminal. Users might need to adapt this.
+                command = `gnome-terminal --working-directory=${quotedPath}`;
+            } else {
+                vscode.window.showErrorMessage(
+                    `Unsupported platform: ${platform}`
+                );
+                return;
+            }
+
+            exec(command, (error) => {
+                if (error) {
+                    vscode.window.showErrorMessage(
+                        `Failed to open terminal: ${error.message}`
+                    );
+                    console.error(`exec error: ${error}`);
+                }
+            });
+        }
+    );
+
+    context.subscriptions.push(openExternalTerminal);
 }
 
 function generateTree(dirPath, ignoredFolders) {
