@@ -41,11 +41,9 @@ function activate(context) {
 
                 // Create JSON with metadata
                 const sonarData = {
-                    generated_at: new Date().toISOString(),
-                    root_path: folderPath,
-                    root_name: path.basename(folderPath),
-                    ignored_folders: ignoredFolders,
-                    tree: tree,
+                    t: new Date().toISOString(),
+                    r: path.basename(folderPath),
+                    c: tree,
                 };
 
                 // Save sonar-file.json
@@ -191,17 +189,17 @@ function generateTree(dirPath, ignoredFolders) {
         if (stats.isDirectory()) {
             // It's a folder
             tree.push({
-                name: item,
-                type: "folder",
-                children: generateTree(fullPath, ignoredFolders),
+                n: item,
+                y: "d",
+                c: generateTree(fullPath, ignoredFolders),
             });
         } else {
             // It's a file
             tree.push({
-                name: item,
-                type: "file",
-                size: stats.size,
-                extension: path.extname(item),
+                n: item,
+                y: "f",
+                s: stats.size,
+                e: path.extname(item),
             });
         }
     });
